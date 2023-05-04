@@ -58,9 +58,22 @@
   right:10px;
 }
 
+.WatchInfo {
+  height: 100%;
+  width: 60%;
+  display: inline-block;
+  position: relative;
+}
+
+.Details {
+  position: absolute;
+  bottom: 0px;
+}
+
 .WatchImage {
   float: right;
-  height: 40px;
+  height: 75px;
+  border-radius: 25%;
 }
 
 .SoldExplanation {

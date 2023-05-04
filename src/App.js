@@ -9,6 +9,8 @@ import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import CloseIcon from '@mui/icons-material/Close';
+import { ThemeProvider } from '@emotion/react';
+import theme from './theme';
 
 function App() {
   let [open, setOpen] = useState(false)
@@ -38,7 +40,7 @@ function App() {
       <p onClick={openModal}>
         Click here to open modal!
       </p>
-
+  
       <Modal
         className='Center'
         open={open}
@@ -55,8 +57,10 @@ function App() {
                   <Typography variant='body2'>You have 1 business day to accept the sale. If you do not accept, it will be automatically rejected.</Typography>
                 </div>
                 <div>
-                  <Button className='Accept' variant='contained' sx={{borderRadius: '25px', marginBottom:'10px', backgroundColor: '#1a3a32', textTransform: 'unset'}}>Accept sale</Button>
-                  <Button className='Reject' sx={{borderRadius: '25px', color: '#1a3a32', textTransform: 'unset'}}>Reject sale</Button>
+                  <ThemeProvider theme={theme}>
+                    <Button onClick={() => {}} className='Accept' variant='contained' sx={{borderRadius: '25px', marginBottom:'10px', textTransform: 'unset'}}>Accept sale</Button>
+                    <Button className='Reject' sx={{borderRadius: '25px', color: '#1a3a32', textTransform: 'unset'}}>Reject sale</Button>
+                  </ThemeProvider>
                 </div>
               </Stack>
             </Grid>
@@ -70,9 +74,9 @@ function App() {
                 <Stack justifyContent='space-between' width='100%'>
                   <Divider/>
                   <div>
-                    <div display='inline-block'>
+                    <div className='WatchInfo'>
                       <Typography variant='subtitle2'>{watchData.listing.model.brand.displayName} {watchData.listing.model.displayName}</Typography>
-                      <Typography variant='body2'>{watchData.listing.condition} / {watchData.listing.manufactureYear}</Typography>
+                      <Typography className='Details' variant='body2'>{watchData.listing.condition} / {watchData.listing.manufactureYear}</Typography>
                     </div>
                     <img className="WatchImage" src={watchData.listing.images[0].image.url}></img>
                   </div>
