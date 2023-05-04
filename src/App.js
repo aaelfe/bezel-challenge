@@ -42,11 +42,11 @@ function App() {
       </p>
   
       <Modal
-        className='Center'
+        className='Modal'
         open={open}
         onClose={() => setOpen(false)}
       >
-        <Paper sx={{borderRadius: '20px', position:'relative'}} className='Modal'>
+        <Paper sx={{borderRadius: '20px', position:'relative'}} className='ModalContent'>
           <CloseIcon className="CloseIcon" onClick={() => setOpen(false)}/>
           <Grid container spacing={5}>
             <Grid sx={{display: 'flex'}} item xs={12} md={6}>

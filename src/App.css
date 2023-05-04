@@ -17,14 +17,14 @@
   color: #61dafb;
 }
 
-.Center {
+.Modal {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: auto;
 }
 
-.Modal {
+.ModalContent {
   width: 95%;
   max-width: 800px;
   height: 85%;
@@ -32,6 +32,7 @@
   padding: 40px;
   display: flex;
   align-items: stretch;
+  outline: none;
 }
 
 .Accept {
