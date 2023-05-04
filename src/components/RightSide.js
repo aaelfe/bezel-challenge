@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 
 function RightSide({ watchData }) {
-
+    
     const dollarFormatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD'
@@ -12,19 +12,19 @@ function RightSide({ watchData }) {
     
     return(
         <Paper 
-            sx={{display: 'flex', backgroundColor:"#f6f4f1", borderRadius: '20px'}} 
+            sx={{display: 'flex', backgroundColor:'#f6f4f1', borderRadius: '20px'}} 
             elevation={0} 
             className='Listing'
         >
             {watchData ?
             <Stack justifyContent='space-between' width='100%'>
             <Divider/>
-            <div className="MarginBoth">
+            <div className='MarginBoth'>
                 <div className='WatchInfo'>
                     <Typography variant='subtitle2'>{watchData.listing.model.brand.displayName} {watchData.listing.model.displayName} {watchData.listing.model.referenceNumber}</Typography>
                     <Typography className='Details' variant='body2'>{watchData.listing.condition} / {watchData.listing.manufactureYear}</Typography>
                 </div>
-                <img className="WatchImage" src={watchData.listing.images[0].image.url}></img>
+                <img className='WatchImage' src={watchData.listing.images[0].image.url}></img>
             </div>
             <Divider/>
             <div className='MarginTop'>
@@ -43,7 +43,7 @@ function RightSide({ watchData }) {
                 <Typography className='InlineBlock' variant='body2'>Insured Shipping</Typography>
                 <Typography className='FloatRight' variant='body2'>Free</Typography>
             </div>
-            <div className="MarginBottom">
+            <div className='MarginBottom'>
                 <Typography className='InlineBlock' sx={{color:'#1e7d67'}} variant='body2'>Bezel authentication</Typography>
                 <Typography className='FloatRight' sx={{color:'#1e7d67'}} variant='body2'>Free</Typography>
             </div>

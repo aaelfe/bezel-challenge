@@ -1,15 +1,11 @@
-import Modal from '@mui/material/Modal';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import CloseIcon from '@mui/icons-material/Close';
 import { ThemeProvider } from '@emotion/react';
 import theme from '../theme';
 
 function LeftSide({ setOpen }) {
-
+    
     const acceptSale = async () => {
         await fetch("https://eb863a74-7a4e-4daf-9540-d2db8470c18e.mock.pstmn.io/marketplace/orders/123/accept",
         {
