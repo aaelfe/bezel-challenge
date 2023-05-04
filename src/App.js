@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -28,6 +27,38 @@ function App() {
     }).catch((error) => console.log(error))
 
     setOpen(true)
+  }
+
+  const acceptSale = async () => {
+    await fetch("https://eb863a74-7a4e-4daf-9540-d2db8470c18e.mock.pstmn.io/marketplace/orders/123/accept",
+    {
+      method: "POST",
+      body: {
+        saleAccepted: true
+      }
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      console.log(data)
+    }).catch((error) => console.log(error))
+
+    setOpen(false)
+  }
+
+  const rejectSale = async () => {
+    await fetch("https://eb863a74-7a4e-4daf-9540-d2db8470c18e.mock.pstmn.io/marketplace/orders/123/decline",
+    {
+      method: "POST",
+      body: {
+        saleAccepted: false
+      }
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      console.log(data)
+    }).catch((error) => console.log(error))
+
+    setOpen(false)
   }
 
   const dollarFormatter = new Intl.NumberFormat('en-US', {
@@ -58,8 +89,8 @@ function App() {
                 </div>
                 <div>
                   <ThemeProvider theme={theme}>
-                    <Button onClick={() => {}} className='Accept' variant='contained' sx={{borderRadius: '25px', marginBottom:'10px', textTransform: 'unset'}}>Accept sale</Button>
-                    <Button className='Reject' sx={{borderRadius: '25px', color: '#1a3a32', textTransform: 'unset'}}>Reject sale</Button>
+                    <Button onClick={acceptSale} className='Accept' variant='contained' sx={{borderRadius: '25px', marginBottom:'10px', textTransform: 'unset'}}>Accept sale</Button>
+                    <Button onClick={rejectSale} className='Reject' sx={{borderRadius: '25px', color: '#1a3a32', textTransform: 'unset'}}>Reject sale</Button>
                   </ThemeProvider>
                 </div>
               </Stack>
@@ -73,15 +104,15 @@ function App() {
                 {watchData ?
                 <Stack justifyContent='space-between' width='100%'>
                   <Divider/>
-                  <div>
+                  <div className="MarginBoth">
                     <div className='WatchInfo'>
-                      <Typography variant='subtitle2'>{watchData.listing.model.brand.displayName} {watchData.listing.model.displayName}</Typography>
+                      <Typography variant='subtitle2'>{watchData.listing.model.brand.displayName} {watchData.listing.model.displayName} {watchData.listing.model.referenceNumber}</Typography>
                       <Typography className='Details' variant='body2'>{watchData.listing.condition} / {watchData.listing.manufactureYear}</Typography>
                     </div>
                     <img className="WatchImage" src={watchData.listing.images[0].image.url}></img>
                   </div>
                   <Divider/>
-                  <div>
+                  <div className='MarginTop'>
                     <Typography sx={{display: "inline-block"}} variant='body2'>Selling Price</Typography>
                     <Typography sx={{display: "inline-block", float:'right', fontWeight: 'bold'}} variant='body2'>{dollarFormatter.format(watchData.salePriceCents/100)}</Typography>
                   </div>
@@ -97,12 +128,12 @@ function App() {
                     <Typography sx={{display: "inline-block"}} variant='body2'>Insured Shipping</Typography>
                     <Typography sx={{display: "inline-block", float:'right'}} variant='body2'>Free</Typography>
                   </div>
-                  <div>
+                  <div className="MarginBottom">
                     <Typography sx={{display: "inline-block", color:'#1e7d67'}} variant='body2'>Bezel authentication</Typography>
                     <Typography sx={{display: "inline-block", float:'right', color:'#1e7d67'}} variant='body2'>Free</Typography>
                   </div>
-                  <Divider sx={{marginTop: "20px"}}/>
-                  <div>
+                  <Divider/>
+                  <div className='MarginTop'>
                     <Typography sx={{display: "inline-block", fontWeight:'bold'}} variant='body2'>Earnings</Typography>
                     <Typography sx={{display: "inline-block", float:'right', fontWeight:'bold'}} variant='body2'>{dollarFormatter.format(watchData.payoutAmountCents/100)}</Typography>
                   </div>

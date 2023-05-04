@@ -79,7 +79,20 @@
 
 .SoldExplanation {
   width: 80%;
-  margin: 10px 0 0 10%
+  margin: 8% 0 0 10%
+}
+
+.MarginTop {
+  margin-top: 10px;
+}
+
+.MarginBottom {
+  margin-bottom: 10px;
+}
+
+.MarginBoth {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .LeftSide {
@@ -89,6 +102,6 @@
 @media screen and (min-width: 900px) { 
   /* This only needs to apply when screen large enough to display halves of modal side by side */
   .Modal {
-    max-height: 500px
+    max-height: 550px
   }
 }
