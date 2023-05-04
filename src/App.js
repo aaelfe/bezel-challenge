@@ -1,15 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-import Modal from '@mui/material/Modal';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
-import Stack from '@mui/material/Stack';
-import CloseIcon from '@mui/icons-material/Close';
-import { ThemeProvider } from '@emotion/react';
-import theme from './theme';
+import CustomModal from './components/CustomModal';
 
 function App() {
   let [open, setOpen] = useState(false)
@@ -29,120 +20,13 @@ function App() {
     setOpen(true)
   }
 
-  const acceptSale = async () => {
-    await fetch("https://eb863a74-7a4e-4daf-9540-d2db8470c18e.mock.pstmn.io/marketplace/orders/123/accept",
-    {
-      method: "POST",
-      body: {
-        saleAccepted: true
-      }
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      console.log(data)
-    }).catch((error) => console.log(error))
-
-    setOpen(false)
-  }
-
-  const rejectSale = async () => {
-    await fetch("https://eb863a74-7a4e-4daf-9540-d2db8470c18e.mock.pstmn.io/marketplace/orders/123/decline",
-    {
-      method: "POST",
-      body: {
-        saleAccepted: false
-      }
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      console.log(data)
-    }).catch((error) => console.log(error))
-
-    setOpen(false)
-  }
-
-  const dollarFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  })
-
   return (
     <div className="App">
       <p onClick={openModal}>
         Click here to open modal!
       </p>
   
-      <Modal
-        className='Modal'
-        open={open}
-        onClose={() => setOpen(false)}
-      >
-        <Paper sx={{borderRadius: '20px', position:'relative'}} className='ModalContent'>
-          <CloseIcon className="CloseIcon" onClick={() => setOpen(false)}/>
-          <Grid container spacing={5}>
-            <Grid sx={{display: 'flex'}} item xs={12} md={6}>
-              <Stack className='LeftSide' justifyContent='space-between'>
-                <div className="SoldExplanation">
-                  <Typography gutterBottom variant='subtitle2'>CONGRATS!</Typography>
-                  <Typography gutterBottom variant='h5'>Your watch sold!</Typography>
-                  <Typography variant='body2'>You have 1 business day to accept the sale. If you do not accept, it will be automatically rejected.</Typography>
-                </div>
-                <div>
-                  <ThemeProvider theme={theme}>
-                    <Button onClick={acceptSale} className='Accept' variant='contained' sx={{borderRadius: '25px', marginBottom:'10px', textTransform: 'unset'}}>Accept sale</Button>
-                    <Button onClick={rejectSale} className='Reject' sx={{borderRadius: '25px', color: '#1a3a32', textTransform: 'unset'}}>Reject sale</Button>
-                  </ThemeProvider>
-                </div>
-              </Stack>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Paper 
-                sx={{display: 'flex', backgroundColor:"#f6f4f1", borderRadius: '20px'}} 
-                elevation={0} 
-                className='Listing'
-              >
-                {watchData ?
-                <Stack justifyContent='space-between' width='100%'>
-                  <Divider/>
-                  <div className="MarginBoth">
-                    <div className='WatchInfo'>
-                      <Typography variant='subtitle2'>{watchData.listing.model.brand.displayName} {watchData.listing.model.displayName} {watchData.listing.model.referenceNumber}</Typography>
-                      <Typography className='Details' variant='body2'>{watchData.listing.condition} / {watchData.listing.manufactureYear}</Typography>
-                    </div>
-                    <img className="WatchImage" src={watchData.listing.images[0].image.url}></img>
-                  </div>
-                  <Divider/>
-                  <div className='MarginTop'>
-                    <Typography sx={{display: "inline-block"}} variant='body2'>Selling Price</Typography>
-                    <Typography sx={{display: "inline-block", float:'right', fontWeight: 'bold'}} variant='body2'>{dollarFormatter.format(watchData.salePriceCents/100)}</Typography>
-                  </div>
-                  <div>
-                    <Typography sx={{display: "inline-block"}} variant='body2'>Level 1 Commission ({watchData.commissionRateBips/100}%)</Typography>
-                    <Typography sx={{display: "inline-block", float:'right'}} variant='body2'>{dollarFormatter.format((watchData.commissionRateBips/10000)*watchData.salePriceCents/100)}</Typography>
-                  </div>
-                  <div>
-                    <Typography sx={{display: "inline-block"}} variant='body2'>Seller fee</Typography>
-                    <Typography sx={{display: "inline-block", float:'right'}} variant='body2'>{dollarFormatter.format(watchData.sellerFeeCents/100)}</Typography>
-                  </div>
-                  <div>
-                    <Typography sx={{display: "inline-block"}} variant='body2'>Insured Shipping</Typography>
-                    <Typography sx={{display: "inline-block", float:'right'}} variant='body2'>Free</Typography>
-                  </div>
-                  <div className="MarginBottom">
-                    <Typography sx={{display: "inline-block", color:'#1e7d67'}} variant='body2'>Bezel authentication</Typography>
-                    <Typography sx={{display: "inline-block", float:'right', color:'#1e7d67'}} variant='body2'>Free</Typography>
-                  </div>
-                  <Divider/>
-                  <div className='MarginTop'>
-                    <Typography sx={{display: "inline-block", fontWeight:'bold'}} variant='body2'>Earnings</Typography>
-                    <Typography sx={{display: "inline-block", float:'right', fontWeight:'bold'}} variant='body2'>{dollarFormatter.format(watchData.payoutAmountCents/100)}</Typography>
-                  </div>
-                </Stack> : <></>}
-              </Paper>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Modal>
+      <CustomModal open={open} setOpen={setOpen} watchData={watchData} setWatchData={setWatchData}/>
     </div>
   );
 }
